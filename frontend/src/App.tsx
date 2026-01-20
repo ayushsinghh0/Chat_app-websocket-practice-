@@ -5,12 +5,14 @@ import './App.css'
 function App() {
 
   const [socket,setSocket] = useState()
-  const inputRef = useRef(null);
+  const inputRef = useRef("");
+  const [texti,Settexti]=useState([]);
 
   function sendMessage(){
     if(!socket){
       return;
     }
+   
     const message = inputRef.current.value;
     socket.send(message);
   }
@@ -20,6 +22,7 @@ function App() {
     setSocket(ws)
 
     ws.onmessage=(ev)=>{
+      texti.push(ev.data)
       alert(ev.data);
     }
 
@@ -27,6 +30,10 @@ function App() {
 
   return (
     <div>
+      <div>
+        {texti.map()}
+
+      </div>
       <input ref={inputRef}  type="text" placeholder = "text"></input>
       <button onClick={sendMessage}>click</button>
     </div>
